@@ -15,6 +15,7 @@ html {
 }
 
 body {
+  margin: 0;
   height: 100%;
   font-family: "Roboto", sans-serif;
   font-style: normal;
@@ -26,7 +27,10 @@ h1, h2, h3, h4, h5, h6, p {
   font-weight: 400;
   color: var(--black);
 }
-.text-h1 {}
+.text-h1 {
+  font-size: 64px;
+  line-height: 75px;
+}
 .text-h2 {
   font-size: 20px;
   line-height: 23.44px;
@@ -111,4 +115,27 @@ button:active {
 }
 button:disabled {
   background: var(--violet-disabled);
+}
+
+.header {
+  height: 200px;
+  width: 100%;
+  display: flex;
+  background: var(--violet);
+  color: var(--white);
+}
+.header-text-frame {
+  width: 846px;
+  margin: auto;
+  text-align: center;
+}
+.header-text-frame > p {
+  margin-top: 16px;
+}
+.header-text {
+  color: var(--white);
+}
+
+.container {
+  width: 1280px;
 }

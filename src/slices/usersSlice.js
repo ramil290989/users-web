@@ -28,9 +28,9 @@ const usersSlice = createSlice({
   reducers: {
     addRemoveLike: (state, { payload }) => {
       const removedItem = 1;
-      state.favoriteUsers.includes(payload.id)
-        ? state.favoriteUsers.splice(state.favoriteUsers.indexOf(payload.id), removedItem)
-        : state.favoriteUsers.push(payload.id);
+      state.favoriteUsers.includes(payload)
+        ? state.favoriteUsers.splice(state.favoriteUsers.indexOf(payload), removedItem)
+        : state.favoriteUsers.push(payload);
     },
   },
   extraReducers: (builder) => {

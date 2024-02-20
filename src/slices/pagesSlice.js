@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-expressions, no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchUsers } from './usersSlice.js';
+import getUsersPerPageCount from '../utils/getUsersPerPageCount.js';
+import { fetchUsers, actions as usersActions } from './usersSlice.js';
 
 const initialState = {
   usersChunk: [],
@@ -21,13 +22,14 @@ const pagesSlice = createSlice({
         state.usersChunk = [];
         state.chunkI = 0;
         const { userList } = payload;
-        const dWidth = window.screen.width;
-        const usersPerPage = dWidth > 1000 ? 8 : 4;
+        const windowWidth = window.screen.width;
+        const usersPerPage = getUsersPerPageCount(windowWidth);
         for (let i = 0; i < userList.length; i += usersPerPage) {
           const usersInPage = userList.slice(i, i + usersPerPage);
           state.usersChunk.push(usersInPage);
         }
-      });
+      })
+      .addCase(usersActions.resetData, () => initialState);
   },
 });
 

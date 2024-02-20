@@ -2,7 +2,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import useAuthHeader from '../hooks/useAuthHeader.jsx';
-import apiRoutes from '../apiRoutes.js';
+import apiRoutes from '../utils/apiRoutes.js';
 
 export const fetchUsers = createAsyncThunk(
   'fetchUsers',
@@ -32,6 +32,7 @@ const usersSlice = createSlice({
         ? state.favoriteUsers.splice(state.favoriteUsers.indexOf(payload), removedItem)
         : state.favoriteUsers.push(payload);
     },
+    resetData: () => initialState,
   },
   extraReducers: (builder) => {
     builder

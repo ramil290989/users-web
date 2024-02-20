@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import apiRoutes from '../apiRoutes.js';
+import apiRoutes from '../utils/apiRoutes.js';
 import AuthContext from '../context/AuthContext.jsx';
 
 const LoginPage = () => {
@@ -82,7 +82,7 @@ const LoginPage = () => {
                 ? <div className="invalid-message">{formProps.errors.password ?? error}</div>
                 : null}
             </div>
-            <button type="submit" className="text">Авторизоваться</button>
+            <button type="submit" className="button-regular w-100 text">Авторизоваться</button>
           </div>
         </form>
       )}

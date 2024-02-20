@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { actions as usersActions } from '../slices/usersSlice.js';
 import useAuthHeader from '../hooks/useAuthHeader.jsx';
-import apiRoutes from '../apiRoutes.js';
+import apiRoutes from '../utils/apiRoutes.js';
 
 const UserCard = (props) => {
   const dispatch = useDispatch();
@@ -16,6 +16,7 @@ const UserCard = (props) => {
       <h2 className="text-h2">{name}</h2>
       <button
         type="button"
+        className="button-like"
         aria-label="likeButton"
         style={{
           backgroundImage: (
@@ -29,7 +30,7 @@ const UserCard = (props) => {
             const headers = useAuthHeader();
             const likePath = apiRoutes.like();
             const likeId = id;
-            const res = await axios.post(likePath, likeId, headers);
+            const res = await axios.post(likePath, { likeId }, headers);
             if (res.status === 200) {
               dispatch(usersActions.addRemoveLike(id));
             }

@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import PrivateRoute from './pages/mainPage/PrivateRoute.jsx';
 import MainPage from './pages/mainPage/MainPage.jsx';
+import Footer from './components/Footer.jsx';
 
 const App = () => {
   const email = localStorage.getItem('usersEmail');
@@ -16,13 +17,16 @@ const App = () => {
   return (
     <Provider store={store}>
       <AuthContext.Provider value={{ authData, setAuthData }}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<PrivateRoute><MainPage /></PrivateRoute>} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-          </Routes>
-        </BrowserRouter>
+        <div style={{ height: '100%' }}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<PrivateRoute><MainPage /></PrivateRoute>} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+            </Routes>
+          </BrowserRouter>
+          <Footer />
+        </div>
       </AuthContext.Provider>
     </Provider>
   );

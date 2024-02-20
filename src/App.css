@@ -26,6 +26,10 @@ img {
   padding: 0;
 }
 
+.w-100 {
+  width: 100%;
+}
+
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
   padding: 0;
@@ -106,33 +110,84 @@ label {
 }
 
 button {
-  height: 48px;
-  width: 100%;
-  margin-top: 24px;
+  background: none;
   border: none;
   border-radius: 8px;
-  background: var(--violet);
-  color: var(--white);
   transition: 0.25s;
 }
-button:active {
+.button-regular {
+  padding: 16px 16px;
+  margin-top: 24px;
+  background: var(--violet);
+  color: var(--white);
+}
+.button-regular:active {
   background: var(--violet-active);
 }
-button:disabled {
+.button-regular:disabled {
   background: var(--violet-disabled);
+}
+.button-exit {
+  position: absolute;
+  top: 32px;
+  right: 80px;
+  padding: 8px 16px;
+  border: 1px solid var(--white);
+  color: var(--white);
+  @media (max-width: 992px) {
+    right: 40px;
+  }
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+    top: 12px;
+    right: 16px;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../public/exitBtn.svg');
+  }
+}
+.span-button-exit {
+  display: block;
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+.button-like {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 20px;
+  bottom: 20px;
+  background: var(--gray-light);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.button-like:active {
+  background: var(--gray);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 .header {
-  height: 200px;
   width: 100%;
-  display: flex;
+  padding: 64px 0;
   background: var(--violet);
   color: var(--white);
 }
 .header-text-frame {
-  width: 846px;
+  max-width: 846px;
   margin: auto;
   text-align: center;
+  @media (max-width: 870px) {
+    margin: 0 20px;
+  }
 }
 .header-text-frame > p {
   margin-top: 16px;
@@ -143,34 +198,60 @@ button:disabled {
 
 .container {
   width: 1280px;
+  margin: auto;
+  position: relative;
+  @media (min-width: 1200px) and (max-width: 1400px) {
+    width: 1080px;
+  };
+  @media (min-width: 992px) and (max-width: 1200px) {
+    width: 870px;
+  };
+  @media (min-width: 768px) and (max-width: 992px) {
+    width: 720px;
+  };
+  @media (min-width: 576px) and (max-width: 768px) {
+    width: 520px;
+  };
+  @media (max-width: 576px) {
+    width: 280px;
+  };
+
 }
 
+.users {
+  width: 100%;
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 20px;
+  @media (min-width: 768px) and (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @media (min-width: 576px) and (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
+  }
+}
 .user-card {
   position: relative;
-  width: 305px;
-  padding-bottom: 64px;
+  padding: 0 10px 64px 10px;
   border-radius: 10px;
   box-shadow: 0px 1px 4px 0px rgba(51, 51, 51, 0.15);
   text-align: center;
 } 
-.user-card > button {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  right: 20px;
-  bottom: 20px;
-  background: var(--gray-light);
-  background-repeat: no-repeat;
-  background-position: center;
-}
-.user-card > button:active {
-  background: var(--gray);
-  background-repeat: no-repeat;
-  background-position: center;
-}
+
 .avatar {
   width: 124px;
   height: 124px;
   margin-top: 36px;
   border-radius: 50%;
+}
+
+.footer {
+  background: var(--violet);
+  height: 50px;
+  margin-top: auto;
+  display: block;
 }

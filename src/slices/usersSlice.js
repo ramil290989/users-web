@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import useAuthHeader from '../hooks/useAuthHeader.jsx';
 import apiRoutes from '../utils/apiRoutes.js';
+import getUsersPerPageCount from '../utils/getUsersPerPageCount.js';
 
 export const fetchUsers = createAsyncThunk(
   'fetchUsers',
@@ -20,6 +21,8 @@ const initialState = {
   uid: null,
   favoriteUsers: [],
   userList: [],
+  usersChunk: [],
+  chunkI: 0,
 };
 
 const usersSlice = createSlice({
@@ -31,6 +34,12 @@ const usersSlice = createSlice({
       state.favoriteUsers.includes(payload)
         ? state.favoriteUsers.splice(state.favoriteUsers.indexOf(payload), removedItem)
         : state.favoriteUsers.push(payload);
+    },
+    changeChunkI: (state, { payload }) => {
+      state.chunkI = payload;
+    },
+    setCurrentUser: (state, { payload }) => {
+      state.currentUser = payload;
     },
     resetData: () => initialState,
   },
@@ -47,6 +56,13 @@ const usersSlice = createSlice({
         state.uId = uId;
         state.favoriteUsers = favoriteUsers;
         state.userList = userList;
+        state.usersChunk = [];
+        const windowWidth = window.screen.width;
+        const usersPerPage = getUsersPerPageCount(windowWidth);
+        for (let i = 0; i < userList.length; i += usersPerPage) {
+          const usersInPage = userList.slice(i, i + usersPerPage);
+          state.usersChunk.push(usersInPage);
+        }
       })
       .addCase(fetchUsers.rejected, (state, { error }) => {
         state.loadingStatus = 'failed';

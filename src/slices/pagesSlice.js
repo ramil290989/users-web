@@ -6,6 +6,7 @@ import { fetchUsers, actions as usersActions } from './usersSlice.js';
 const initialState = {
   usersChunk: [],
   chunkI: null,
+  currentUser: {},
 };
 
 const pagesSlice = createSlice({

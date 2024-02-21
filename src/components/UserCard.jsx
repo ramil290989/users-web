@@ -1,18 +1,30 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable
+  react/prop-types,
+  jsx-a11y/click-events-have-key-events,
+  jsx-a11y/no-static-element-interactions,
+*/
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { actions as usersActions } from '../slices/usersSlice.js';
 import useAuthHeader from '../hooks/useAuthHeader.jsx';
 import apiRoutes from '../utils/apiRoutes.js';
 
-const UserCard = (props) => {
+const UserCard = ({ user }) => {
   const dispatch = useDispatch();
-  const { name, avatar, id } = props;
+  const navigate = useNavigate();
+  const { name, avatar, id } = user;
   const likes = useSelector((state) => state.users.favoriteUsers);
   return (
-    <div className="user-card">
-      <img className="avatar" src={avatar} alt="avatar" />
+    <div
+      className="user-card"
+      onClick={() => {
+        dispatch(usersActions.setCurrentUser(user));
+        navigate('/user');
+      }}
+    >
+      <img className="avatar" src={avatar} alt="avatar-small" />
       <h2 className="text-h2">{name}</h2>
       <button
         type="button"

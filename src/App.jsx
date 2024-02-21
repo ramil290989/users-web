@@ -9,6 +9,7 @@ import RegisterPage from './pages/RegisterPage.jsx';
 import PrivateRoute from './pages/mainPage/PrivateRoute.jsx';
 import MainPage from './pages/mainPage/MainPage.jsx';
 import Footer from './components/Footer.jsx';
+import UserPage from './pages/UserPage.jsx';
 
 const App = () => {
   const email = localStorage.getItem('usersEmail');
@@ -17,16 +18,17 @@ const App = () => {
   return (
     <Provider store={store}>
       <AuthContext.Provider value={{ authData, setAuthData }}>
-        <div style={{ height: '100%' }}>
+        <div className="content">
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<PrivateRoute><MainPage /></PrivateRoute>} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/user" element={<UserPage />} />
             </Routes>
           </BrowserRouter>
-          <Footer />
         </div>
+        <Footer />
       </AuthContext.Provider>
     </Provider>
   );

@@ -2,8 +2,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from '../../slices/usersSlice.js';
-import Header from '../../components/Header.jsx';
-import Users from '../../components/Users.jsx';
+import UsersPagination from '../../components/UsersPagination.jsx';
+import MainHeaderContent from '../../components/MainHeader.jsx';
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -19,22 +19,22 @@ const MainPage = () => {
     case 'loading':
       return (
         <>
-          <Header />
+          <MainHeaderContent />
           загрузка
         </>
       );
     case 'failed':
       return (
         <>
-          <Header />
+          <MainHeaderContent />
           ошибка загрузки
         </>
       );
     case 'complete':
       return (
         <>
-          <Header />
-          <Users />
+          <MainHeaderContent />
+          <UsersPagination />
         </>
       );
     default:

@@ -6,10 +6,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { actions as usersActions } from '../slices/usersSlice.js';
-import useAuthHeader from '../hooks/useAuthHeader.jsx';
-import apiRoutes from '../utils/apiRoutes.js';
+import { addRemoveLike } from '../slices/usersSlice.js';
 
 const UserCard = ({ user }) => {
   const dispatch = useDispatch();
@@ -19,9 +16,11 @@ const UserCard = ({ user }) => {
   return (
     <div
       className="user-card"
-      onClick={() => {
-        dispatch(usersActions.setCurrentUser(user));
-        navigate('/user');
+      onClick={({ target }) => {
+        if (target.tagName !== 'BUTTON') {
+          localStorage.setItem('usersSelectedUId', id);
+          navigate('/user');
+        }
       }}
     >
       <img className="avatar" src={avatar} alt="avatar-small" />
@@ -37,18 +36,8 @@ const UserCard = ({ user }) => {
               : 'url("./like_off.svg")'
           ),
         }}
-        onClick={async () => {
-          try {
-            const headers = useAuthHeader();
-            const likePath = apiRoutes.like();
-            const likeId = id;
-            const res = await axios.post(likePath, { likeId }, headers);
-            if (res.status === 200) {
-              dispatch(usersActions.addRemoveLike(id));
-            }
-          } catch (e) {
-            console.log(e);
-          }
+        onClick={() => {
+          dispatch(addRemoveLike(id));
         }}
       />
     </div>

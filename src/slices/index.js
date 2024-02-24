@@ -8,3 +8,4 @@ const store = configureStore({
 });
 
 export default store;
+export * as usersSelectors from './selectors.js';

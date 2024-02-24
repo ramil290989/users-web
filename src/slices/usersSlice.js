@@ -8,10 +8,20 @@ import getUsersPerPageCount from '../utils/getUsersPerPageCount.js';
 export const fetchUsers = createAsyncThunk(
   'fetchUsers',
   async () => {
+    console.log('fetch');
     const headers = useAuthHeader();
     const path = apiRoutes.fetchData();
     const response = await axios.get(path, headers);
     return response.data;
+  },
+);
+export const addRemoveLike = createAsyncThunk(
+  'addRemoveLike',
+  async (likeId) => {
+    const headers = useAuthHeader();
+    const likePath = apiRoutes.like();
+    await axios.post(likePath, { likeId }, headers);
+    return likeId;
   },
 );
 
@@ -29,12 +39,6 @@ const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    addRemoveLike: (state, { payload }) => {
-      const removedItem = 1;
-      state.favoriteUsers.includes(payload)
-        ? state.favoriteUsers.splice(state.favoriteUsers.indexOf(payload), removedItem)
-        : state.favoriteUsers.push(payload);
-    },
     changeChunkI: (state, { payload }) => {
       state.chunkI = payload;
     },
@@ -67,6 +71,12 @@ const usersSlice = createSlice({
       .addCase(fetchUsers.rejected, (state, { error }) => {
         state.loadingStatus = 'failed';
         state.error = error;
+      })
+      .addCase(addRemoveLike.fulfilled, (state, { payload }) => {
+        const removedItem = 1;
+        state.favoriteUsers.includes(payload)
+          ? state.favoriteUsers.splice(state.favoriteUsers.indexOf(payload), removedItem)
+          : state.favoriteUsers.push(payload);
       });
   },
 });

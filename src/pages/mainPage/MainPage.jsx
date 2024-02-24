@@ -1,19 +1,11 @@
 /* eslint-disable no-unused-expressions */
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsers } from '../../slices/usersSlice.js';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import UsersPagination from '../../components/UsersPagination.jsx';
 import MainHeaderContent from '../../components/MainHeader.jsx';
 
 const MainPage = () => {
-  const dispatch = useDispatch();
   const loadingStatus = useSelector((state) => state.users.loadingStatus);
-
-  useEffect(() => {
-    if (loadingStatus === 'loading') {
-      dispatch(fetchUsers());
-    }
-  }, [loadingStatus]);
 
   switch (loadingStatus) {
     case 'loading':

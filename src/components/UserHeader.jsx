@@ -1,11 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { usersSelectors } from '../slices/index.js';
 import Header from './Header.jsx';
 
 const UserHeader = () => {
   const naigate = useNavigate();
-  const { avatar, name, profession } = useSelector((state) => state.users.currentUser);
+  const all = useSelector(usersSelectors.allUsers);
+  if (!all.legth) {
+    return null;
+  }
+  const { avatar, name, profession } = useSelector(usersSelectors.selectedUser);
   return (
     <Header>
       <button

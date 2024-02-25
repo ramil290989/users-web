@@ -50,7 +50,8 @@ const RegisterPage = () => {
             onClick={() => setConfirmPasswordHidden(!confirmPasswordHidden)}
           />
         </div>
-        <button type="button" className="text">Зарегистрироваться</button>
+        <button type="button" className="button-regular w-100 mt-24 text">Зарегистрироваться</button>
+        <a className="mt-24" href="/login">Авторизоваться</a>
       </div>
     </div>
   );

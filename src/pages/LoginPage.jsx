@@ -82,7 +82,8 @@ const LoginPage = () => {
                 ? <div className="invalid-message">{formProps.errors.password ?? error}</div>
                 : null}
             </div>
-            <button type="submit" className="button-regular w-100 text">Авторизоваться</button>
+            <button type="submit" className="button-regular w-100 mt-24 text">Авторизоваться</button>
+            <a className="mt-24" href="/register">Зарегистрироваться</a>
           </div>
         </form>
       )}

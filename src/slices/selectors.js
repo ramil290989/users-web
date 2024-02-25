@@ -8,4 +8,11 @@ const selectedUser = (state) => {
 
 const loadingStatus = (state) => state.users.loadingStatus;
 
-export { allUsers, selectedUser, loadingStatus };
+const error = (state) => state.users.error;
+
+export {
+  allUsers,
+  selectedUser,
+  loadingStatus,
+  error,
+};

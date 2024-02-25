@@ -6,10 +6,6 @@ import Header from './Header.jsx';
 
 const UserHeader = () => {
   const naigate = useNavigate();
-  const all = useSelector(usersSelectors.allUsers);
-  if (!all.legth) {
-    return null;
-  }
   const { avatar, name, profession } = useSelector(usersSelectors.selectedUser);
   return (
     <Header>

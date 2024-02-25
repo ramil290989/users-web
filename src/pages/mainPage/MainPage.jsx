@@ -1,25 +1,43 @@
 /* eslint-disable no-unused-expressions */
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUsers } from '../../slices/usersSlice.js';
+import { usersSelectors } from '../../slices/index.js';
 import UsersPagination from '../../components/UsersPagination.jsx';
 import MainHeaderContent from '../../components/MainHeader.jsx';
+import useLogOut from '../../hooks/useLogOut.jsx';
+import LoadingError from '../../components/LoadingError.jsx';
+import Loading from '../../components/Loading.jsx';
 
 const MainPage = () => {
-  const loadingStatus = useSelector((state) => state.users.loadingStatus);
+  const dispatch = useDispatch();
+  const logOut = useLogOut();
+
+  const loadingStatus = useSelector(usersSelectors.loadingStatus);
+  const loadingError = useSelector(usersSelectors.error);
+
+  useEffect(() => {
+    if (loadingStatus === 'loading') {
+      dispatch(fetchUsers());
+    }
+    if (loadingStatus === 'failed' && /403/.test(loadingError.message)) {
+      logOut();
+    }
+  }, [loadingStatus, loadingError]);
 
   switch (loadingStatus) {
     case 'loading':
       return (
         <>
           <MainHeaderContent />
-          загрузка
+          <Loading />
         </>
       );
     case 'failed':
       return (
         <>
           <MainHeaderContent />
-          ошибка загрузки
+          <LoadingError />
         </>
       );
     case 'complete':

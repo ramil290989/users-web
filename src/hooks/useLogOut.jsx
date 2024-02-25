@@ -1,16 +1,15 @@
-import { useContext } from 'react';
 import { useDispatch } from 'react-redux';
-import AuthContext from '../context/AuthContext.jsx';
+import { useNavigate } from 'react-router-dom';
 import { actions as usersActions } from '../slices/usersSlice.js';
 
 const useLogOut = () => {
   const dispatch = useDispatch();
-  const { setAuthData } = useContext(AuthContext);
+  const navigate = useNavigate();
   const logOut = () => {
     localStorage.removeItem('usersEmail');
     localStorage.removeItem('usersToken');
-    setAuthData({});
     dispatch(usersActions.resetData());
+    navigate('/login');
   };
   return logOut;
 };

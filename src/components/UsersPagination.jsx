@@ -24,7 +24,7 @@ const UsersPagination = () => {
           <button
             key={u[0].id}
             type="button"
-            className="button-regular"
+            className="button-regular mt-24"
             disabled={chunkI === i}
             onClick={() => dispatch(usersActions.changeChunkI(i))}
           >

@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react';
+/* eslint-disable no-unused-expressions */
+import React, { useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import apiRoutes from '../utils/apiRoutes.js';
-import AuthContext from '../context/AuthContext.jsx';
+import { validationLogin } from '../utils/validationSchemas.js';
 
 const LoginPage = () => {
-  const { setAuthData } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isHidden, setIsHidden] = useState(true);
   const [error, setError] = useState(null);
@@ -17,23 +17,26 @@ const LoginPage = () => {
         email: '',
         password: '',
       }}
+      validationSchema={validationLogin}
       onSubmit={async ({ email, password }) => {
         setIsDisabled(true);
         setError(null);
         const loginRoute = apiRoutes.login();
         const loginData = { email, password };
-        try {
-          const authData = await axios.post(loginRoute, loginData);
-          const { token } = authData.data;
-          localStorage.setItem('usersEmail', email);
-          localStorage.setItem('usersToken', token);
-          setAuthData({ email, token });
-          navigate('/');
-        } catch (e) {
-          setError(e.message);
-        } finally {
-          setIsDisabled(false);
-        }
+        await axios.post(loginRoute, loginData)
+          .then((response) => {
+            const { token } = response.data;
+            localStorage.setItem('usersToken', token);
+            navigate('/');
+          })
+          .catch((e) => {
+            e.response && e.response.status === 401
+              ? setError('Неверный Email или пароль')
+              : setError('Ошибка сети');
+          })
+          .finally(() => {
+            setIsDisabled(false);
+          });
       }}
     >
       {(formProps) => (
@@ -52,6 +55,9 @@ const LoginPage = () => {
                 disabled={isDisabled}
                 required
               />
+              {(formProps.errors.email && formProps.touched.email)
+                ? <div className="invalid-message">{formProps.errors.email}</div>
+                : null}
             </div>
             <div className="input-box">
               <label htmlFor="password" className="text">Пароль</label>
@@ -82,7 +88,7 @@ const LoginPage = () => {
                 ? <div className="invalid-message">{formProps.errors.password ?? error}</div>
                 : null}
             </div>
-            <button type="submit" className="button-regular w-100 mt-24 text">Авторизоваться</button>
+            <button type="submit" disabled={isDisabled} className="button-regular w-100 mt-24 text">Авторизоваться</button>
             <a className="mt-24" href="/register">Зарегистрироваться</a>
           </div>
         </form>

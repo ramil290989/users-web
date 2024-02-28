@@ -1,5 +1,4 @@
-const useAuthHeader = () => {
-  const token = localStorage.getItem('usersToken');
+const useAuthHeader = (token) => {
   const authHeader = {
     headers: {
       auth: token,

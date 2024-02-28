@@ -1,13 +1,15 @@
 /* eslint-disable no-unused-expressions */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import apiRoutes from '../utils/apiRoutes.js';
 import { validationLogin } from '../utils/validationSchemas.js';
+import TokenContext from '../context/TokenContext.jsx';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { setToken } = useContext(TokenContext);
   const [isHidden, setIsHidden] = useState(true);
   const [error, setError] = useState(null);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -27,6 +29,7 @@ const LoginPage = () => {
           .then((response) => {
             const { token } = response.data;
             localStorage.setItem('usersToken', token);
+            setToken(token);
             navigate('/');
           })
           .catch((e) => {

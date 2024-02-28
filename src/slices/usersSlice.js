@@ -7,8 +7,8 @@ import getUsersPerPageCount from '../utils/getUsersPerPageCount.js';
 
 export const fetchUsers = createAsyncThunk(
   'fetchUsers',
-  async () => {
-    const headers = useAuthHeader();
+  async (token) => {
+    const headers = useAuthHeader(token);
     const path = apiRoutes.fetchData();
     const response = await axios.get(path, headers);
     return response.data;

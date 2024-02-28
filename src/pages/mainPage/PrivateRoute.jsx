@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+import TokenContext from '../../context/TokenContext.jsx';
 
 const PrivateRoute = ({ children }) => {
-  const token = localStorage.getItem('usersToken');
+  const { token } = useContext(TokenContext);
   return (
     token ? children : <Navigate to="/login" />
   );

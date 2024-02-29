@@ -1,4 +1,6 @@
-const server = process.env.SERVER || 'http://localhost:3003';
+import env from 'react-dotenv';
+
+const server = env.REACT_APP_SERVER;
 
 const apiRoutes = {
   login: () => `${server}/api/login`,

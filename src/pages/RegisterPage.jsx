@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { validationRegister } from '../utils/validationSchemas.js';
 import apiRoutes from '../utils/apiRoutes.js';
+import InputBox from '../components/InputBox.jsx';
+import ErrorNotification from '../components/ErrorNotification.jsx';
 
 const RegisterPage = () => {
   const [isDisabled, setIsDisabled] = useState(false);
@@ -13,6 +15,40 @@ const RegisterPage = () => {
   const [passwordIsHidden, setPasswordIsHidden] = useState(true);
   const [confirmPasswordIsHidden, setConfirmPasswordIsHidden] = useState(true);
 
+  const nameInputProps = {
+    id: 'name',
+    label: 'Имя',
+    type: 'text',
+    error,
+  };
+  const emailInputProps = {
+    id: 'email',
+    label: 'Email',
+    type: 'email',
+    error,
+  };
+  const passwordInputProps = {
+    id: 'password',
+    label: 'Пароль',
+    type: 'password',
+    error,
+  };
+  const confirmPasswordInputProps = {
+    id: 'confirmPassword',
+    label: 'Подтвердите пароль',
+    type: 'password',
+    error,
+  };
+  const stateProps = {
+    isDisabled,
+    isHidden: passwordIsHidden,
+    setIsHidden: setPasswordIsHidden,
+  };
+  const confirmPasswordStateProps = {
+    isDisabled,
+    isHidden: confirmPasswordIsHidden,
+    setIsHidden: setConfirmPasswordIsHidden,
+  };
   return (
     <Formik
       initialValues={{
@@ -45,96 +81,27 @@ const RegisterPage = () => {
         <form onSubmit={formProps.handleSubmit} className="form-card-outer">
           <div className="form-card">
             <h2 className="text-h2">Регистрация</h2>
-            <div className="input-box">
-              <label htmlFor="name" className="text">Имя</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                className={(formProps.errors.name && formProps.touched.name) || error ? 'invalid-input' : null}
-                onChange={formProps.handleChange}
-                onBlur={formProps.handleBlur}
-                disabled={isDisabled}
-                required
-              />
-              {(formProps.errors.name && formProps.touched.name)
-                ? <div className="invalid-message">{formProps.errors.name}</div>
-                : null}
-            </div>
-            <div className="input-box">
-              <label htmlFor="email" className="text">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className={(formProps.errors.email && formProps.touched.email) || error ? 'invalid-input' : null}
-                onChange={formProps.handleChange}
-                onBlur={formProps.handleBlur}
-                disabled={isDisabled}
-                required
-              />
-              {(formProps.errors.email && formProps.touched.email)
-                ? <div className="invalid-message">{formProps.errors.email}</div>
-                : null}
-            </div>
-            <div className="input-box">
-              <label htmlFor="password" className="text">Пароль</label>
-              <input
-                type={passwordIsHidden ? 'password' : 'text'}
-                id="password"
-                name="password"
-                className={(formProps.errors.password && formProps.touched.password) || error ? 'invalid-input' : null}
-                onChange={formProps.handleChange}
-                onBlur={formProps.handleBlur}
-                disabled={isDisabled}
-                required
-              />
-              {(formProps.errors.password && formProps.touched.password)
-                ? <div className="invalid-message">{formProps.errors.password}</div>
-                : null}
-              <button
-                type="button"
-                aria-label="eyeButton"
-                className="eye-button"
-                style={{
-                  backgroundImage: (
-                    passwordIsHidden
-                      ? 'url("./eye_off.svg")'
-                      : 'url("./eye_on.svg")'
-                  ),
-                }}
-                onClick={() => setPasswordIsHidden(!passwordIsHidden)}
-              />
-            </div>
-            <div className="input-box">
-              <label htmlFor="confirmPassword" className="text">Подтвердите пароль</label>
-              <input
-                type={confirmPasswordIsHidden ? 'password' : 'text'}
-                id="confirmPassword"
-                name="confirmPassword"
-                className={(formProps.errors.confirmPassword && formProps.touched.confirmPassword) || error ? 'invalid-input' : null}
-                onChange={formProps.handleChange}
-                onBlur={formProps.handleBlur}
-                disabled={isDisabled}
-                required
-              />
-              {(formProps.errors.confirmPassword && formProps.touched.confirmPassword) || error
-                ? <div className="invalid-message">{formProps.errors.confirmPassword ?? error}</div>
-                : null}
-              <button
-                type="button"
-                aria-label="eyeButton"
-                className="eye-button"
-                style={{
-                  backgroundImage: (
-                    confirmPasswordIsHidden
-                      ? 'url("./eye_off.svg")'
-                      : 'url("./eye_on.svg")'
-                  ),
-                }}
-                onClick={() => setConfirmPasswordIsHidden(!confirmPasswordIsHidden)}
-              />
-            </div>
+            <InputBox
+              mainProps={nameInputProps}
+              formProps={formProps}
+              stateProps={stateProps}
+            />
+            <InputBox
+              mainProps={emailInputProps}
+              formProps={formProps}
+              stateProps={stateProps}
+            />
+            <InputBox
+              mainProps={passwordInputProps}
+              formProps={formProps}
+              stateProps={stateProps}
+            />
+            <InputBox
+              mainProps={confirmPasswordInputProps}
+              formProps={formProps}
+              stateProps={confirmPasswordStateProps}
+            />
+            {error ? <ErrorNotification message={error} /> : null}
             <button type="submit" disabled={isDisabled} className="button-regular w-100 mt-24 text">Зарегистрироваться</button>
             <a className="mt-24" href="/login">Авторизоваться</a>
           </div>

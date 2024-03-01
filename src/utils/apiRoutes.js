@@ -1,6 +1,4 @@
-import env from 'react-dotenv';
-
-const server = env.REACT_APP_SERVER;
+const server = process.env.REACT_APP_API_SERVER;
 
 const apiRoutes = {
   login: () => `${server}/api/login`,

@@ -16,8 +16,9 @@ export const fetchUsers = createAsyncThunk(
 );
 export const addRemoveLike = createAsyncThunk(
   'addRemoveLike',
-  async (likeId) => {
-    const headers = useAuthHeader();
+  async ({ id, token }) => {
+    const likeId = id;
+    const headers = useAuthHeader(token);
     const likePath = apiRoutes.like();
     await axios.post(likePath, { likeId }, headers);
     return likeId;

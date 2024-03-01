@@ -3,16 +3,19 @@
   jsx-a11y/click-events-have-key-events,
   jsx-a11y/no-static-element-interactions,
 */
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addRemoveLike } from '../slices/usersSlice.js';
+import TokenContext from '../context/TokenContext.jsx';
 
 const UserCard = ({ user }) => {
+  const { token } = useContext(TokenContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { name, avatar, id } = user;
   const likes = useSelector((state) => state.users.favoriteUsers);
+
   return (
     <div
       className="user-card"
@@ -36,9 +39,7 @@ const UserCard = ({ user }) => {
               : 'url("./like_off.svg")'
           ),
         }}
-        onClick={() => {
-          dispatch(addRemoveLike(id));
-        }}
+        onClick={() => dispatch(addRemoveLike({ id, token }))}
       />
     </div>
   );
